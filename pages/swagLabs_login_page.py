@@ -1,4 +1,5 @@
 from locators.swagLabs_locators import SwagLabsLocators
+import allure
 
 class SwagLabsLoginPage:
     URL = "https://www.saucedemo.com/"
@@ -6,9 +7,11 @@ class SwagLabsLoginPage:
     def __init__(self, page):
         self.page = page
 
+    @allure.step("Open Swag Labs login page")
     def open(self):
         self.page.goto(self.URL)
 
+    @allure.step("Login to Swag Labs")
     def login(self, username, password):
         self.page.locator(SwagLabsLocators.LOGIN_USERNAME).fill(username)
         self.page.locator(SwagLabsLocators.LOGIN_PASSWORD).fill(password)
