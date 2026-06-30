@@ -1,6 +1,6 @@
 import allure
 
-from pages.swagLabs_login_page import SwagLabsLoginPage
+from pages.login_page import LoginPage
 import json
 
 def load_users():
@@ -10,12 +10,13 @@ def load_users():
 @allure.feature("Login")
 @allure.story("Valid login attempt")
 @allure.title("User can login with valid credentials")
-def test_swagLabs_login(page):
+
+def test_valid_login(page):
     users = load_users()
     user = users["valid_user"]
 
-    swagLabs_login_page = SwagLabsLoginPage(page)
+    login_page = LoginPage(page)
 
-    swagLabs_login_page.open()
-    swagLabs_login_page.login(user["username"], user["password"])
+    login_page.open()
+    login_page.login(user["username"], user["password"])
     assert page.url == "https://www.saucedemo.com/inventory.html"

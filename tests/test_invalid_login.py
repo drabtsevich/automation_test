@@ -1,7 +1,7 @@
 
 import allure
 
-from pages.swagLabs_login_page import SwagLabsLoginPage
+from pages.login_page import LoginPage
 import json
 
 def load_users():
@@ -11,12 +11,12 @@ def load_users():
 @allure.feature("Login")
 @allure.story("Invalid login attempt")
 @allure.title("User cannot login with invalid credentials")
-def test_swagLabs_login(page):
+def test_invalid_login(page):
     users = load_users()
     user = users["invalid_user"]
 
-    swagLabs_login_page = SwagLabsLoginPage(page)
+    login_page = LoginPage(page)
 
-    swagLabs_login_page.open()
-    swagLabs_login_page.login(user["username"], user["password"])
+    login_page.open()
+    login_page.login(user["username"], user["password"])
     assert page.locator("h3[data-test='error']").inner_text() == "Epic sadface: Username and password do not match any user in this service"    

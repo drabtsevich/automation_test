@@ -1,0 +1,16 @@
+venv/
+.git/
+.vscode/
+__pycache__/
+.pytest_cache/
+
+allure-results/
+allure-report/
+reports/
+screenshots/
+video/
+traces/
+
+*.pyc
+*.log
+.DS_Store
