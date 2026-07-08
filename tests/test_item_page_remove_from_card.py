@@ -5,8 +5,8 @@ import allure
 
 
 @allure.feature("Item Page")
-@allure.story("Add product to cart")
-@allure.title("User can add Sauce Labs Bolt T-Shirt to cart")
+@allure.story("Remove from cart")
+@allure.title("User can delete item Sauce Labs Bolt T-Shirt from cart")
 def test_add_to_cart_from_inventory(page, users, inventory_data):
 
     login_page = LoginPage(page)
@@ -22,7 +22,10 @@ def test_add_to_cart_from_inventory(page, users, inventory_data):
     )
     inventory_page.open_item_page(inventory_data["item_name_2"])
     assert "inventory-item.html" in page.url
-
+    
     item_page.add_to_cart(inventory_data["item_name_2"])
 
     assert inventory_page.get_cart_count() == "1"
+
+    item_page.remove_from_cart()
+    assert not item_page.cart_is_empty()

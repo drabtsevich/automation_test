@@ -1,9 +1,10 @@
 import allure
 
 from locators.locators import PagesLocatosrs
+from pages.base import BasePage
 
 
-class InventoryPage:
+class InventoryPage(BasePage):
 
     def __init__(self, page):
         self.page = page
@@ -11,7 +12,7 @@ class InventoryPage:
     @allure.step("Add product '{product_name}' to cart")
     def add_to_cart(self, product_name: str):
         self.page.locator(
-            PagesLocatosrs.PRODUCTS[product_name]
+            PagesLocatosrs.ADD_TO_CART_BUTTONS[product_name]
         ).click()
 
     @allure.step("Open shopping cart")
@@ -23,5 +24,5 @@ class InventoryPage:
     @allure.step("Open item '{product_name}' page")
     def open_item_page(self, product_name: str):
         self.page.locator(
-            PagesLocatosrs.PRODUCTS[product_name]
+            PagesLocatosrs.PRODUCT_LINKS[product_name]
         ).click()
