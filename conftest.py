@@ -3,6 +3,7 @@ from datetime import datetime
 
 import allure
 import pytest
+import json
 
 
 @pytest.fixture(autouse=True)
@@ -28,3 +29,13 @@ def pytest_runtest_makereport(item, call):
     outcome = yield
     rep = outcome.get_result()
     setattr(item, "rep_" + rep.when, rep)
+
+@pytest.fixture
+def users():
+    with open("test_data/users.json") as file:
+        return json.load(file)
+
+@pytest.fixture
+def inventory_data():
+    with open("test_data/inventory_data.json") as file:
+        return json.load(file)["inventory_data"]
