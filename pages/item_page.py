@@ -20,11 +20,3 @@ class ItemPage(BasePage):
         self.page.locator(
             PagesLocatosrs.REMOVE_FROM_CART_BUTTON
             ).click()
-
-    @allure.step("Cart is empty")
-    def cart_is_empty(self):
-        return self.page.locator(
-            PagesLocatosrs.CART_BADGE
-            ).is_visible()
-
-    

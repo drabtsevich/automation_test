@@ -11,3 +11,9 @@ class BasePage:
         return self.page.locator(
             PagesLocatosrs.CART_BADGE
             ).text_content()
+
+    @allure.step("Cart is empty")
+    def cart_is_empty(self):
+        return not self.page.locator(
+            PagesLocatosrs.CART_BADGE
+            ).is_visible()
