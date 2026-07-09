@@ -20,3 +20,8 @@ class PagesLocatosrs:
     }
     ADD_TO_CART_BUTTON = "button[id^='add-to-cart']"
     REMOVE_FROM_CART_BUTTON = "id=remove"
+    REMOVE_FROM_CART_BUTTONS = {
+        "Sauce Labs Backpack": "#remove-sauce-labs-backpack",
+        "Sauce Labs Bike Light": "#remove-sauce-labs-bike-light",
+        "Sauce Labs Bolt T-Shirt": "#remove-sauce-labs-bolt-t-shirt",
+    }

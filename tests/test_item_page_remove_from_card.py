@@ -28,4 +28,4 @@ def test_add_to_cart_from_inventory(page, users, inventory_data):
     assert inventory_page.get_cart_count() == "1"
 
     item_page.remove_from_cart()
-    assert not item_page.cart_is_empty()
+    assert item_page.cart_is_empty()
