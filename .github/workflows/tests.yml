@@ -2,9 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
 
 jobs:
   test:
@@ -25,7 +23,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Install Playwright browsers
-        run: playwright install --with-deps chromium
+        run: playwright install --with-deps chromium firefox
 
       - name: Run tests
         run: pytest --alluredir=allure-results

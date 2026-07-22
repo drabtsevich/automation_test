@@ -26,6 +26,8 @@ def test_add_to_cart_from_inventory(page, users, inventory_data):
     item_page.add_to_cart(inventory_data["item_name_2"])
 
     assert inventory_page.get_cart_count() == "1"
+    assert item_page.is_remove_button_visible()
 
     item_page.remove_from_cart()
     assert item_page.cart_is_empty()
+    assert item_page.is_add_to_cart_button_visible()

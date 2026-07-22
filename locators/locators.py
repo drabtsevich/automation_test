@@ -3,7 +3,7 @@ class PagesLocatosrs:
     LOGIN_PASSWORD = "id=password"
     ERROR_MESSAGE = "h3[data-test='error']"
     LOGIN_BUTTON = "id=login-button"
-    INVENTORY_ITEM = "[class='inventory_item_name']"
+    INVENTORY_ITEM = "[data-test='inventory-item-name']"
     CHECKOUT_BUTTON = "id=checkout"
     CART_LINK = "[class=shopping_cart_link]"
     CART_BADGE = "[class='shopping_cart_badge']"

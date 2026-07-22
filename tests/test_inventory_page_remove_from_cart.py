@@ -22,6 +22,8 @@ def test_remove_from_cart_from_inventory(page, users, inventory_data):
 
     inventory_page.add_to_cart(inventory_data["item_name"])
     assert inventory_page.get_cart_count() == "1"
+    assert inventory_page.is_remove_button_visible(inventory_data["item_name"])
 
     inventory_page.remove_from_cart(inventory_data["item_name"])
     assert inventory_page.cart_is_empty()
+    assert inventory_page.is_add_to_cart_button_visible(inventory_data["item_name"])

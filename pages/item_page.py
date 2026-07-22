@@ -20,3 +20,15 @@ class ItemPage(BasePage):
         self.page.locator(
             PagesLocatosrs.REMOVE_FROM_CART_BUTTON
             ).click()
+
+    @allure.step("Check add-to-cart button is visible")
+    def is_add_to_cart_button_visible(self):
+        return self.page.locator(
+            PagesLocatosrs.ADD_TO_CART_BUTTON
+            ).is_visible()
+
+    @allure.step("Check remove button is visible")
+    def is_remove_button_visible(self):
+        return self.page.locator(
+            PagesLocatosrs.REMOVE_FROM_CART_BUTTON
+            ).is_visible()
