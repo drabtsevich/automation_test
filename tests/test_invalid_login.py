@@ -4,22 +4,18 @@ import pytest
 from locators.locators import PagesLocatosrs
 from pages.login_page import LoginPage
 
+INVALID_LOGIN_CASES = {
+    "invalid_user": "Epic sadface: Username and password do not match any user in this service",
+    "locked_out_user": "Epic sadface: Sorry, this user has been locked out.",
+}
+
 
 @allure.feature("Login")
 @allure.story("Invalid login attempt")
 @pytest.mark.parametrize(
     "user_key, expected_error",
-    [
-        (
-            "invalid_user",
-            "Epic sadface: Username and password do not match any user in this service",
-        ),
-        (
-            "locked_out_user",
-            "Epic sadface: Sorry, this user has been locked out.",
-        ),
-    ],
-    ids=["invalid_user", "locked_out_user"],
+    INVALID_LOGIN_CASES.items(),
+    ids=list(INVALID_LOGIN_CASES),
 )
 @allure.title("User cannot login with invalid credentials")
 def test_invalid_login(page, users, user_key, expected_error):
