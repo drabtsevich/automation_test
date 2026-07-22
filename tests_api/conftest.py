@@ -2,11 +2,18 @@ import pytest
 import requests
 
 API_BASE_URL = "https://dummyjson.com"
+VALID_USERNAME = "emilys"
+VALID_PASSWORD = "emilyspass"
 
 
 @pytest.fixture(scope="session")
 def api_base_url():
     return API_BASE_URL
+
+
+@pytest.fixture
+def valid_credentials():
+    return {"username": VALID_USERNAME, "password": VALID_PASSWORD}
 
 
 @pytest.fixture

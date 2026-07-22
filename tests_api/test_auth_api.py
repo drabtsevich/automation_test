@@ -4,23 +4,21 @@ import allure
 @allure.feature("Auth API")
 @allure.story("Login")
 @allure.title("POST /auth/login succeeds with valid credentials")
-def test_login_success(api_client, api_base_url):
-    payload = {"username": "emilys", "password": "emilyspass"}
-
-    response = api_client.post(f"{api_base_url}/auth/login", json=payload)
+def test_login_success(api_client, api_base_url, valid_credentials):
+    response = api_client.post(f"{api_base_url}/auth/login", json=valid_credentials)
 
     assert response.status_code == 200
 
     body = response.json()
-    assert body["username"] == payload["username"]
+    assert body["username"] == valid_credentials["username"]
     assert "accessToken" in body
 
 
 @allure.feature("Auth API")
 @allure.story("Login")
 @allure.title("POST /auth/login fails with invalid credentials")
-def test_login_invalid_credentials(api_client, api_base_url):
-    payload = {"username": "emilys", "password": "wrong-password"}
+def test_login_invalid_credentials(api_client, api_base_url, valid_credentials):
+    payload = {**valid_credentials, "password": "wrong-password"}
 
     response = api_client.post(f"{api_base_url}/auth/login", json=payload)
 
@@ -31,10 +29,9 @@ def test_login_invalid_credentials(api_client, api_base_url):
 @allure.feature("Auth API")
 @allure.story("Current user")
 @allure.title("GET /auth/me returns the logged-in user for a valid access token")
-def test_get_current_user_with_valid_token(api_client, api_base_url):
+def test_get_current_user_with_valid_token(api_client, api_base_url, valid_credentials):
     login_response = api_client.post(
-        f"{api_base_url}/auth/login",
-        json={"username": "emilys", "password": "emilyspass"},
+        f"{api_base_url}/auth/login", json=valid_credentials
     )
     access_token = login_response.json()["accessToken"]
 
@@ -44,7 +41,7 @@ def test_get_current_user_with_valid_token(api_client, api_base_url):
     )
 
     assert response.status_code == 200
-    assert response.json()["username"] == "emilys"
+    assert response.json()["username"] == valid_credentials["username"]
 
 
 @allure.feature("Auth API")
