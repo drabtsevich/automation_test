@@ -1,4 +1,4 @@
-class PagesLocatosrs:
+class PagesLocators:
     LOGIN_USERNAME = "id=user-name"
     LOGIN_PASSWORD = "id=password"
     ERROR_MESSAGE = "h3[data-test='error']"
@@ -18,7 +18,7 @@ class PagesLocatosrs:
         "Sauce Labs Bike Light": "#add-to-cart-sauce-labs-bike-light",
         "Sauce Labs Bolt T-Shirt": "#add-to-cart-sauce-labs-bolt-t-shirt",
     }
-    ADD_TO_CART_BUTTON = "button[id^='add-to-cart']"
+    ADD_TO_CART_BUTTON = "id=add-to-cart"
     REMOVE_FROM_CART_BUTTON = "id=remove"
     REMOVE_FROM_CART_BUTTONS = {
         "Sauce Labs Backpack": "#remove-sauce-labs-backpack",

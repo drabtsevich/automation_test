@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from locators.locators import PagesLocatosrs
+from locators.locators import PagesLocators
 from pages.login_page import LoginPage
 
 INVALID_LOGIN_CASES = {
@@ -25,7 +25,7 @@ def test_invalid_login(page, users, user_key, expected_error):
     login_page.open()
     login_page.login(user["username"], user["password"])
 
-    error_message = page.locator(PagesLocatosrs.ERROR_MESSAGE)
+    error_message = page.locator(PagesLocators.ERROR_MESSAGE)
 
     assert error_message.is_visible()
     assert error_message.inner_text() == expected_error

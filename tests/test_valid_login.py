@@ -1,6 +1,6 @@
 import allure
 
-from locators.locators import PagesLocatosrs
+from locators.locators import PagesLocators
 from pages.login_page import LoginPage
 
 
@@ -16,6 +16,6 @@ def test_valid_login(page, users):
     login_page.login(user["username"], user["password"])
 
     assert page.url == "https://www.saucedemo.com/inventory.html"
-    assert not page.locator(PagesLocatosrs.ERROR_MESSAGE).is_visible()
-    assert page.locator(PagesLocatosrs.INVENTORY_ITEM).first.is_visible()
-    assert not page.locator(PagesLocatosrs.CART_BADGE).is_visible()
+    assert not page.locator(PagesLocators.ERROR_MESSAGE).is_visible()
+    assert page.locator(PagesLocators.INVENTORY_ITEM).first.is_visible()
+    assert not page.locator(PagesLocators.CART_BADGE).is_visible()
