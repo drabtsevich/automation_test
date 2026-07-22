@@ -1,17 +1,17 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: tests-chromium
+  name: tests-api
   labels:
     app: tests-automation
-    browser: chromium
+    suite: api
 spec:
   backoffLimit: 0
   template:
     metadata:
       labels:
         app: tests-automation
-        browser: chromium
+        suite: api
     spec:
       restartPolicy: Never
       containers:
@@ -20,6 +20,6 @@ spec:
           imagePullPolicy: IfNotPresent
           command:
             - pytest
-            - tests
+            - tests_api
             - -o
-            - "addopts=--alluredir=allure-results --clean-alluredir --browser chromium"
+            - "addopts=--alluredir=allure-results --clean-alluredir"

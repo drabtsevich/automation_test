@@ -20,5 +20,6 @@ spec:
           imagePullPolicy: IfNotPresent
           command:
             - pytest
+            - tests
             - -o
             - "addopts=--alluredir=allure-results --clean-alluredir --browser firefox"
