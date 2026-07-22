@@ -19,6 +19,7 @@ from pages.login_page import LoginPage
             "Epic sadface: Sorry, this user has been locked out.",
         ),
     ],
+    ids=["invalid_user", "locked_out_user"],
 )
 @allure.title("User cannot login with invalid credentials")
 def test_invalid_login(page, users, user_key, expected_error):

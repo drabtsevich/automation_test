@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 
 import allure
@@ -14,7 +15,8 @@ def screenshot_after_test(page, request):
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    file_name = f"{request.node.name}_{timestamp}.png"
+    safe_test_name = re.sub(r"[^A-Za-z0-9._-]", "_", request.node.name)
+    file_name = f"{safe_test_name}_{timestamp}.png"
     path = os.path.join("screenshots", file_name)
 
     page.screenshot(path=path, full_page=True)
