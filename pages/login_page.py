@@ -1,4 +1,4 @@
-from locators.locators import PagesLocatosrs
+from locators.locators import PagesLocators
 import allure
 
 class LoginPage:
@@ -13,6 +13,6 @@ class LoginPage:
 
     @allure.step("Login to Swag Labs")
     def login(self, username, password):
-        self.page.locator(PagesLocatosrs.LOGIN_USERNAME).fill(username)
-        self.page.locator(PagesLocatosrs.LOGIN_PASSWORD).fill(password)
-        self.page.locator(PagesLocatosrs.LOGIN_BUTTON).click()        
+        self.page.locator(PagesLocators.LOGIN_USERNAME).fill(username)
+        self.page.locator(PagesLocators.LOGIN_PASSWORD).fill(password)
+        self.page.locator(PagesLocators.LOGIN_BUTTON).click()        

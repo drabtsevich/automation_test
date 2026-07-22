@@ -7,7 +7,7 @@ import allure
 @allure.feature("Item Page")
 @allure.story("Add product to cart")
 @allure.title("User can add Sauce Labs Bolt T-Shirt to cart")
-def test_add_to_cart_from_inventory(page, users, inventory_data):
+def test_add_to_cart_from_item_page(page, users, inventory_data):
 
     login_page = LoginPage(page)
     inventory_page = InventoryPage(page)

@@ -11,6 +11,14 @@ import json
 def screenshot_after_test(page, request):
     yield
 
+    failed = any(
+        getattr(request.node, "rep_" + when, None) is not None
+        and getattr(request.node, "rep_" + when).failed
+        for when in ("setup", "call")
+    )
+    if not failed:
+        return
+
     os.makedirs("screenshots", exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

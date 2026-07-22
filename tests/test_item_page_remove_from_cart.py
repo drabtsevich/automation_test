@@ -7,7 +7,7 @@ import allure
 @allure.feature("Item Page")
 @allure.story("Remove from cart")
 @allure.title("User can delete item Sauce Labs Bolt T-Shirt from cart")
-def test_add_to_cart_from_inventory(page, users, inventory_data):
+def test_remove_from_cart_from_item_page(page, users, inventory_data):
 
     login_page = LoginPage(page)
     inventory_page = InventoryPage(page)
