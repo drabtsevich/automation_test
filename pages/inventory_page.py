@@ -21,6 +21,18 @@ class InventoryPage(BasePage):
             PagesLocatosrs.REMOVE_FROM_CART_BUTTONS[product_name]
         ).click()
 
+    @allure.step("Check '{product_name}' add-to-cart button is visible")
+    def is_add_to_cart_button_visible(self, product_name: str):
+        return self.page.locator(
+            PagesLocatosrs.ADD_TO_CART_BUTTONS[product_name]
+        ).is_visible()
+
+    @allure.step("Check '{product_name}' remove button is visible")
+    def is_remove_button_visible(self, product_name: str):
+        return self.page.locator(
+            PagesLocatosrs.REMOVE_FROM_CART_BUTTONS[product_name]
+        ).is_visible()
+
     @allure.step("Open shopping cart")
     def open_cart(self):
         self.page.locator(
