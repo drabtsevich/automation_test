@@ -1,6 +1,7 @@
 import allure
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
-from locators.locators import PagesLocatosrs
+from locators.locators import PagesLocators
 
 class BasePage:
     def __init__(self, page):
@@ -8,12 +9,15 @@ class BasePage:
 
     @allure.step("Get cart badge count")
     def get_cart_count(self):
-        return self.page.locator(
-            PagesLocatosrs.CART_BADGE
-            ).text_content()
+        badge = self.page.locator(PagesLocators.CART_BADGE)
+        badge.wait_for(state="visible", timeout=5000)
+        return badge.text_content()
 
     @allure.step("Cart is empty")
     def cart_is_empty(self):
-        return not self.page.locator(
-            PagesLocatosrs.CART_BADGE
-            ).is_visible()
+        badge = self.page.locator(PagesLocators.CART_BADGE)
+        try:
+            badge.wait_for(state="hidden", timeout=5000)
+            return True
+        except PlaywrightTimeoutError:
+            return False
