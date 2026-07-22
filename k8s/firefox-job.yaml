@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tests-firefox
+  labels:
+    app: tests-automation
+    browser: firefox
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: tests-automation
+        browser: firefox
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: tests
+          image: tests_automation:k8s
+          imagePullPolicy: IfNotPresent
+          command:
+            - pytest
+            - -o
+            - "addopts=--alluredir=allure-results --clean-alluredir --browser firefox"
