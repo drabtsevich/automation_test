@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tests-mobile
+  labels:
+    app: tests-automation
+    suite: mobile
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: tests-automation
+        suite: mobile
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: tests
+          image: tests_automation:k8s
+          imagePullPolicy: IfNotPresent
+          # The iOS simulator can only run on macOS, so the tests drive the Appium
+          # server running on the host machine rather than a device in the cluster.
+          env:
+            - name: APPIUM_URL
+              value: "http://host.docker.internal:4723"
+            # Path on the host, where Appium reads the app from; filled in by run-tests.sh.
+            - name: IOS_APP_PATH
+              value: "__IOS_APP_PATH__"
+          command:
+            - pytest
+            - tests_mobile
+            - -o
+            - "addopts=--alluredir=allure-results --clean-alluredir"
