@@ -44,3 +44,97 @@ jobs:
           name: screenshots
           path: screenshots
           retention-days: 14
+
+  mobile:
+    # iOS tests need a macOS runner and take several minutes (Xcode builds
+    # WebDriverAgent each run), so only run them for changes going into master:
+    # pull requests targeting master, and pushes (merges) to master.
+    if: github.base_ref == 'master' || github.ref == 'refs/heads/master'
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Appium and XCUITest driver
+        run: |
+          npm install -g appium
+          appium driver install xcuitest
+
+      - name: Download My Demo App
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p apps
+          gh release download 2.3.0 --repo saucelabs/my-demo-app-ios -p SauceLabs-Demo-App.Simulator.zip -D apps
+          unzip -q apps/SauceLabs-Demo-App.Simulator.zip -d apps
+
+      - name: Pick an iPhone simulator
+        # Runner images ship different devices than a local Mac, so use the
+        # iPhone on the newest available iOS runtime.
+        run: |
+          python3 - <<'EOF'
+          import json, os, re, subprocess
+          data = json.loads(subprocess.check_output(["xcrun", "simctl", "list", "devices", "available", "-j"]))
+          best = None
+          for runtime, devices in data["devices"].items():
+              match = re.search(r"iOS-(\d+)-(\d+)", runtime)
+              if not match:
+                  continue
+              version = (int(match[1]), int(match[2]))
+              for device in devices:
+                  if device["name"].startswith("iPhone") and (best is None or version > best[0]):
+                      best = (version, device)
+          version, device = best
+          print(f"Using {device['name']} on iOS {version[0]}.{version[1]}")
+          with open(os.environ["GITHUB_ENV"], "a") as env:
+              env.write(f"IOS_DEVICE_NAME={device['name']}\n")
+              env.write(f"IOS_PLATFORM_VERSION={version[0]}.{version[1]}\n")
+              env.write(f"IOS_UDID={device['udid']}\n")
+          EOF
+
+      - name: Boot simulator
+        run: xcrun simctl bootstatus "$IOS_UDID" -b
+
+      - name: Start Appium
+        run: |
+          appium --log-level info > appium.log 2>&1 &
+          for _ in $(seq 1 30); do
+            curl -sf http://127.0.0.1:4723/status >/dev/null && exit 0
+            sleep 1
+          done
+          echo "Appium did not start" >&2
+          cat appium.log
+          exit 1
+
+      - name: Run mobile tests
+        env:
+          IOS_APP_PATH: ${{ github.workspace }}/apps/Payload/My Demo App.app
+        run: pytest tests_mobile -o "addopts=--alluredir=allure-results-mobile --clean-alluredir"
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-mobile
+          path: allure-results-mobile
+          retention-days: 14
+
+      - name: Upload Appium log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-log
+          path: appium.log
+          retention-days: 14
