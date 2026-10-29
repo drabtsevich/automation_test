@@ -7,3 +7,6 @@ __pycache__/
 screenshots/
 allure-results/
 allure-report/
+
+# Downloaded mobile app builds
+apps/
