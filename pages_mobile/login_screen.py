@@ -21,6 +21,21 @@ class LoginScreen(BaseScreen):
     def is_open(self):
         return self.is_visible(MobileLocators.LOGIN_BUTTON)
 
+    @allure.step("Get Login button accessibility label")
+    def get_login_button_label(self):
+        return self.get_label(MobileLocators.LOGIN_BUTTON)
+
+    @allure.step("Get user shortcut '{username}' accessibility label")
+    def get_user_shortcut_label(self, username):
+        return self.get_label(MobileLocators.login_user_shortcut(username))
+
+    @allure.step("Get username and password field accessibility labels")
+    def get_field_labels(self):
+        return {
+            "username": self.get_label(MobileLocators.LOGIN_USERNAME),
+            "password": self.get_label(MobileLocators.LOGIN_PASSWORD),
+        }
+
     @allure.step("Check alert '{message}' is shown")
     def is_alert_shown(self, message):
         return self.is_visible(MobileLocators.text(message))

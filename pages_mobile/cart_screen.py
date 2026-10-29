@@ -18,6 +18,14 @@ class CartScreen(BaseScreen):
     def remove_item(self):
         self.tap(MobileLocators.REMOVE_ITEM_BUTTON)
 
+    @allure.step("Get 'Remove Item' button accessibility label")
+    def get_remove_item_label(self):
+        return self.get_label(MobileLocators.REMOVE_ITEM_BUTTON)
+
+    @allure.step("Get 'Proceed To Checkout' button accessibility label")
+    def get_checkout_label(self):
+        return self.get_label(MobileLocators.PROCEED_TO_CHECKOUT_BUTTON)
+
     @allure.step("Check cart is empty")
     def is_empty(self):
         return self.is_visible(MobileLocators.CART_EMPTY_TITLE)
