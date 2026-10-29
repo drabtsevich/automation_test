@@ -7,6 +7,13 @@ class BasePage:
     def __init__(self, page):
         self.page = page
 
+    def is_visible(self, selector, timeout=5000):
+        try:
+            self.page.locator(selector).first.wait_for(state="visible", timeout=timeout)
+            return True
+        except PlaywrightTimeoutError:
+            return False
+
     @allure.step("Get cart badge count")
     def get_cart_count(self):
         badge = self.page.locator(PagesLocators.CART_BADGE)

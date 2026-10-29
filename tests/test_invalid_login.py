@@ -27,6 +27,6 @@ def test_invalid_login(page, users, user_key, expected_error):
 
     error_message = page.locator(PagesLocators.ERROR_MESSAGE)
 
-    assert error_message.is_visible()
+    assert login_page.is_visible(PagesLocators.ERROR_MESSAGE)
     assert error_message.inner_text() == expected_error
     assert page.url == login_page.URL

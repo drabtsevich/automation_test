@@ -2,12 +2,11 @@ from locators.locators import PagesLocators
 from playwright.sync_api import Error as PlaywrightError
 import allure
 
-class LoginPage:
+from pages.base import BasePage
+
+class LoginPage(BasePage):
     URL = "https://www.saucedemo.com/"
     OPEN_RETRIES = 3
-
-    def __init__(self, page):
-        self.page = page
 
     @allure.step("Open Swag Labs login page")
     def open(self):

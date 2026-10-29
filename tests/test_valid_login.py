@@ -17,5 +17,5 @@ def test_valid_login(page, users):
 
     assert page.url == "https://www.saucedemo.com/inventory.html"
     assert not page.locator(PagesLocators.ERROR_MESSAGE).is_visible()
-    assert page.locator(PagesLocators.INVENTORY_ITEM).first.is_visible()
+    assert login_page.is_visible(PagesLocators.INVENTORY_ITEM)
     assert not page.locator(PagesLocators.CART_BADGE).is_visible()
