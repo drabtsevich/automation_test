@@ -13,6 +13,8 @@ APP_PATH = os.getenv(
 )
 DEVICE_NAME = os.getenv("IOS_DEVICE_NAME", "iPhone 16 Pro")
 PLATFORM_VERSION = os.getenv("IOS_PLATFORM_VERSION", "18.3")
+UDID = os.getenv("IOS_UDID")
+SIMULATOR_STARTUP_TIMEOUT_MS = os.getenv("IOS_SIMULATOR_STARTUP_TIMEOUT_MS")
 
 
 @pytest.fixture
@@ -22,6 +24,10 @@ def driver(request):
     options.device_name = DEVICE_NAME
     options.platform_version = PLATFORM_VERSION
     options.new_command_timeout = 120
+    if UDID:
+        options.udid = UDID
+    if SIMULATOR_STARTUP_TIMEOUT_MS:
+        options.simulator_startup_timeout = int(SIMULATOR_STARTUP_TIMEOUT_MS)
     # On a fresh machine (e.g. CI) the first session builds WebDriverAgent, which
     # takes minutes; the default client and WDA timeouts are too short for that.
     options.wda_launch_timeout = 300000
