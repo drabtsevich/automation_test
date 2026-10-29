@@ -8,7 +8,7 @@ class CartPage(BasePage):
 
     @allure.step("Visible cart item count")
     def is_product_visible(self):
-        return self.page.locator(PagesLocators.INVENTORY_ITEM).is_visible()
+        return self.is_visible(PagesLocators.INVENTORY_ITEM)
 
     @allure.step("Get product name")
     def get_product_name(self):

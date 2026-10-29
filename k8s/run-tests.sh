@@ -17,7 +17,17 @@ echo "==> Starting chromium, firefox, and api test Jobs"
 kubectl apply -f k8s/chromium-job.yaml -f k8s/firefox-job.yaml -f k8s/api-job.yaml
 
 echo "==> Waiting for Jobs to finish"
-kubectl wait --for=condition=complete --timeout=120s job/tests-chromium job/tests-firefox job/tests-api || true
+# Poll until every Job is Complete or Failed; `kubectl wait --for=condition=complete`
+# would block until the timeout on a Job that failed.
+for _ in $(seq 1 60); do
+    PENDING=0
+    for job in tests-chromium tests-firefox tests-api; do
+        STATE=$(kubectl get job "$job" -o jsonpath='{.status.conditions[?(@.status=="True")].type}')
+        [[ "$STATE" == *Complete* || "$STATE" == *Failed* ]] || PENDING=1
+    done
+    [[ "$PENDING" == "0" ]] && break
+    sleep 2
+done
 
 echo
 echo "=== chromium results ==="

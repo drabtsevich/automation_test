@@ -6,7 +6,8 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04, which Playwright 1.60 can't install deps for.
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
