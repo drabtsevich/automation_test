@@ -117,11 +117,14 @@ jobs:
         run: xcrun simctl bootstatus "$IOS_UDID" -b
 
       - name: Start Appium
+        # Loading the XCUITest driver on a cold runner usually takes 30-90s but
+        # has taken longer, so wait on a deadline rather than a probe count.
         run: |
           appium --log-level info > appium.log 2>&1 &
-          for _ in $(seq 1 30); do
-            curl -sf http://127.0.0.1:4723/status >/dev/null && exit 0
-            sleep 1
+          deadline=$((SECONDS + 300))
+          while (( SECONDS < deadline )); do
+            curl -sf --max-time 5 http://127.0.0.1:4723/status >/dev/null && exit 0
+            sleep 2
           done
           echo "Appium did not start" >&2
           cat appium.log
