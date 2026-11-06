@@ -29,9 +29,9 @@ def driver(request):
     if SIMULATOR_STARTUP_TIMEOUT_MS:
         options.simulator_startup_timeout = int(SIMULATOR_STARTUP_TIMEOUT_MS)
     # On a fresh machine (e.g. CI) the first session builds WebDriverAgent, which
-    # takes minutes; the default client and WDA timeouts are too short for that.
-    options.wda_launch_timeout = 300000
-    client_config = AppiumClientConfig(remote_server_addr=APPIUM_URL, timeout=600)
+    # takes 5-10 minutes on a GitHub macOS runner and has run past 10, so allow 20.
+    options.wda_launch_timeout = 1200000
+    client_config = AppiumClientConfig(remote_server_addr=APPIUM_URL, timeout=1200)
 
     # Appium reinstalls the app per session, so every test starts with an empty cart.
     driver = webdriver.Remote(APPIUM_URL, options=options, client_config=client_config)

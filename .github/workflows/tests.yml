@@ -59,7 +59,7 @@ jobs:
       || github.ref == 'refs/heads/master'
       || github.event_name == 'workflow_dispatch'
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout code
